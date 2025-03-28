@@ -1,0 +1,21 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>GoodCatch List</title>
+</head>
+<body>
+  <h1>GoodCatch List for <%= user.username %></h1> <!-- This displays the username -->
+  <ul>
+    <% goodCatches.forEach(goodCatch => { %>
+      <li>
+        <strong>Site:</strong> <%= goodCatch.site %><br />
+        <strong>Department:</strong> <%= goodCatch.department %><br />
+        <strong>Area:</strong> <%= goodCatch.area %><br />
+        <strong>Events:</strong> <%= goodCatch.events %><br />
+        <strong>Created by:</strong> <%= goodCatch.creationUser.username %> <!-- Displays the creator's username -->
+      </li>
+    <% }) %>
+  </ul>
+</body>
+</html>

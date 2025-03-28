@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/stylesheets/style.css" />
+  <title>Create New GoodCatch</title>
+</head>
+<body>
+  <div class="form-container">
+    <h1>Create a New GoodCatch</h1>
+    <form action="/users/:userId/goodCatch" method="POST">
+      <label for="site">Site:</label>
+      <input type="text" name="site" id="site" required />
+      
+      <label for="department">Department:</label>
+      <input type="text" name="department" id="department" required />
+
+      <label for="area">Area:</label>
+      <input type="text" name="area" id="area" required />
+
+      <label for="events">Events:</label>
+      <textarea name="events" id="events" required></textarea>
+
+      <button type="submit">Create</button>
+    </form>
+  </div>
+</body>
+</html>

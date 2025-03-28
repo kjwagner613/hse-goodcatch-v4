@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/stylesheets/style.css" />
+  <title>Edit GoodCatch</title>
+</head>
+<body>
+  <div class="form-container">
+    <h1>Edit GoodCatch</h1>
+    <form action="/users/:userId/goodCatch/:id?_method=PUT" method="POST">
+      <label for="site">Site:</label>
+      <input type="text" name="site" id="site" value="<%= goodCatch.site %>" required />
+      
+      <label for="department">Department:</label>
+      <input type="text" name="department" id="department" value="<%= goodCatch.department %>" required />
+
+      <label for="area">Area:</label>
+      <input type="text" name="area" id="area" value="<%= goodCatch.area %>" required />
+
+      <label for="events">Events:</label>
+      <textarea name="events" id="events" required><%= goodCatch.events %></textarea>
+
+      <button type="submit">Update</button>
+    </form>
+  </div>
+</body>
+</html>

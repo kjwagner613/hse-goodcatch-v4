@@ -1,0 +1,14 @@
+<link rel="stylesheet" href="/stylesheets/partials.css" />
+<nav>
+  <div class="nav-links">
+    <div class="nav-links">
+      <% if(user) { %>
+        <a class="authlink" href="/users/<%= user._id %>/goodCatches">My Catches</a>
+            <a class="authlink" href="/auth/sign-out">Sign Out</a>
+      <% } else { %>
+        <a class="authlink" href="/auth/sign-in">Sign In</a>
+        <a class="authlink" href="/auth/sign-up">Sign Up</a>
+      <% } %>
+    </div>
+  </div>
+</nav>
