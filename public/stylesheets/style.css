@@ -1,0 +1,31 @@
+.navbar {
+    position: fixed; /* Keeps navbar in a fixed position */
+    top: 0;          /* Positions it at the top */
+    left: 0;         /* Positions it at the left */
+    width: 100%;     /* Spans across the top */
+    background-color: #333; /* Dark background color */
+    color: #fff;     /* White text */
+    padding: 10px;   /* Adds spacing inside the navbar */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Adds a subtle shadow for depth */
+  }
+  
+  .navbar ul {
+    list-style: none; /* Removes bullet points */
+    margin: 0;
+    padding: 0;
+    display: flex; /* Aligns items horizontally */
+    gap: 20px; /* Adds space between navbar links */
+  }
+  
+  .navbar ul li {
+    display: inline;
+  }
+  
+  .navbar ul li a {
+    color: #fff; /* White text for links */
+    text-decoration: none; /* Removes underline */
+  }
+  
+  .navbar ul li a:hover {
+    text-decoration: underline; /* Adds underline on hover */
+  }

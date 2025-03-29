@@ -43,7 +43,7 @@ exports.handleSignIn = async (req, res) => {
     // Set session details for the logged-in user
     req.session.user = {
       username: userInDatabase.username,
-      _id: userInDatabase._id,
+      _id: userInDatabase._id.toString(), // Ensure it's a string
     };
 
     // Redirect to the home page or a protected route
@@ -78,41 +78,33 @@ exports.handleSignUp = async (req, res) => {
     res.redirect("/auth/sign-up");
   }
 };
-
-// Handle sign-in form submission
 exports.handleSignIn = async (req, res) => {
   try {
-    // Validate username and password
+    // Find user by username
     const userInDatabase = await User.findOne({ username: req.body.username });
     if (!userInDatabase) {
-      return res.send("Login failed. Please try again.");
+      return res.status(401).send("Login failed. Invalid username or password.");
     }
 
+    // Compare hashed password
     const validPassword = bcrypt.compareSync(
       req.body.password,
       userInDatabase.password
     );
     if (!validPassword) {
-      return res.send("Login failed. Please try again.");
+      return res.status(401).send("Login failed. Invalid username or password.");
     }
 
-    // Set session details for the logged-in user
+    // Set session
     req.session.user = {
       username: userInDatabase.username,
       _id: userInDatabase._id,
     };
 
-    res.redirect("/");
+    // Successful login
+    res.redirect(`/users/${userInDatabase._id}/goodCatches`);
   } catch (error) {
     console.error("Error during sign-in:", error);
-    res.redirect("/auth/sign-in");
+    res.status(500).send("An error occurred during sign-in. Please try again.");
   }
-
-  exports.renderSignUp = (req, res) => {
-    res.render("auth/sign-up", { csrfToken: req.csrfToken() });
-  };
-
-  exports.renderSignIn = (req, res) => {
-    res.render("auth/sign-in", { csrfToken: req.csrfToken() });
-  };
 };

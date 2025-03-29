@@ -2,48 +2,63 @@ const express = require("express");
 const router = express.Router();
 const GoodCatch = require("../models/goodCatch");
 
-// Fetch all GoodCatches for a specific user
 router.get("/", async (req, res) => {
   try {
-    // Fetch the user details based on userId
-    const user = await User.findById(req.params.userId); // req.params.userId comes from the URL path
-    if (!user) {
-      return res.status(404).send("User not found");
+    if (!req.session.user) {
+      console.error("No session user found");
+      return res.status(401).send("Unauthorized: Please sign in.");
     }
 
-    // Find all GoodCatches associated with this user
-    const goodCatches = await GoodCatch.find({ creationUser: user._id }).populate("creationUser");
+    const sessionUserId = req.session.user._id;
+    const urlUserId = req.params.userId;
 
-    // Pass both the user and their GoodCatches to the view
-    res.render("goodCatches/list.ejs", { goodCatches, user }); // user contains the username
+    if (sessionUserId !== urlUserId) {
+      console.error("Session user ID and URL user ID do not match");
+      return res
+        .status(403)
+        .send("Forbidden: You do not have access to this user's data.");
+    }
+
+    console.log("Session user and URL user validated:", sessionUserId);
+
+    const goodCatches = await GoodCatch.find({
+      creationUser: sessionUserId,
+    }).populate("creationUser");
+
+    console.log("GoodCatches found:", goodCatches.length);
+    res.render("goodCatches/list.ejs", {
+      goodCatches,
+      user: req.session.user,
+      currentPage: "goodCatchList",
+    });
   } catch (error) {
     console.error("Error fetching GoodCatches:", error);
     res.status(500).send("Failed to fetch GoodCatches");
   }
 });
 
-// Fetch a single GoodCatch by ID
 router.get("/:id", async (req, res) => {
   try {
-    const goodCatch = await GoodCatch.findById(req.params.id).populate("creationUser");
+    const goodCatch = await GoodCatch.findById(req.params.id).populate(
+      "creationUser"
+    );
     if (!goodCatch) {
       return res.status(404).send("GoodCatch not found");
     }
-    res.render("goodCatches/detail.ejs", { goodCatch }); // Adjust this view as necessary
+    res.render("goodCatches/detail.ejs", { goodCatch });
   } catch (error) {
     console.error("Error fetching GoodCatch:", error);
     res.status(500).send("Failed to fetch GoodCatch");
   }
 });
 
-// Create a new GoodCatch
 router.post("/", async (req, res) => {
   try {
     const newGoodCatch = await GoodCatch.create({
       site: req.body.site,
       department: req.body.department,
       area: req.body.area,
-      creationUser: req.params.userId, // Use userId from the URL
+      creationUser: req.params.userId,
       events: req.body.events,
     });
     res.status(201).redirect(`/users/${req.params.userId}/goodCatch`);
@@ -55,16 +70,35 @@ router.post("/", async (req, res) => {
 
 router.get("/:userId/goodCatch", async (req, res) => {
   try {
-    const userId = req.params.userId; // Extract userId from the URL
-    const goodCatches = await GoodCatch.find({ creationUser: userId }).populate("creationUser");
-    res.render("goodCatches/list.ejs", { goodCatches, userId }); // Pass userId to the view
+    // Check if user is authenticated
+    if (!req.session.user) {
+      return res.status(401).send("Unauthorized: Please sign in.");
+    }
+
+    const sessionUserId = req.session.user._id;
+    const urlUserId = req.params.userId;
+
+    // Ensure the user is accessing their own data
+    if (sessionUserId !== urlUserId) {
+      return res.status(403).send("Forbidden: You can't access other users' data.");
+    }
+
+    // Find GoodCatch records for the authenticated user
+    const goodCatches = await GoodCatch.find({ creationUser: sessionUserId })
+      .populate("creationUser");
+
+    if (!goodCatches.length) {
+      return res.status(404).send("No GoodCatches found for this user.");
+    }
+
+    // Render the results using EJS
+    res.render("goodCatches/list.ejs", { goodCatches, user: req.session.user });
   } catch (error) {
     console.error("Error fetching GoodCatches:", error);
-    res.status(500).send("Failed to fetch GoodCatches");
+    res.status(500).send("Failed to fetch GoodCatches.");
   }
 });
 
-// Edit a GoodCatch
 router.get("/:id/edit", async (req, res) => {
   try {
     const goodCatch = await GoodCatch.findById(req.params.id);
@@ -78,7 +112,6 @@ router.get("/:id/edit", async (req, res) => {
   }
 });
 
-// Update a GoodCatch
 router.put("/:id", async (req, res) => {
   try {
     const updatedGoodCatch = await GoodCatch.findByIdAndUpdate(
@@ -101,7 +134,6 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-// Delete a GoodCatch
 router.delete("/:id", async (req, res) => {
   try {
     const deletedGoodCatch = await GoodCatch.findByIdAndDelete(req.params.id);
