@@ -1,25 +1,34 @@
-
 <!DOCTYPE html>
-<html>
-<head>
-  <link rel="stylesheet" type="text/css" href="/stylesheets/style.css" />
-  <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
-  <title>GoodCatch List</title>
-</head>  <%- include('../partials/_navbar.ejs') %>
-<body><div style="background: yellow; padding: 10px;">Navbar Test</div>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <title>GoodCatch List</title>
+  </head>
+  <body>
+    <%- include("../partials/_navbar.ejs") %>
+    <h1>GoodCatch List for <%= user.username %></h1>
 
-  <%- include("../partials/_navbar.ejs") %>
- <h1>GoodCatch List for <%= user.username %></h1>  
-  <ul>
-    <% goodCatches.forEach(goodCatch => { %>
+    <% if (goodCatches.length === 0) { %>
+    <p>
+      No GoodCatches found. Create one by clicking "Create New" in the navbar.
+    </p>
+    <% } else { %>
+    <ul>
+      <% goodCatches.forEach(goodCatch => { %>
       <li>
         <strong>Site:</strong> <%= goodCatch.site %><br />
         <strong>Department:</strong> <%= goodCatch.department %><br />
         <strong>Area:</strong> <%= goodCatch.area %><br />
-        <strong>Events:</strong> <%= goodCatch.events %><br />
-        <strong>Created by:</strong> <%= goodCatch.creationUser.username %>  
+        <% if (goodCatch.events && goodCatch.events.length > 0) { %>
+        <strong>Event Category:</strong> <%= goodCatch.events[0].category %><br />
+        <strong>Event Description:</strong> <%= goodCatch.events[0].description
+        %> <% } %>
+        <!-- You can add more details or links (e.g., view or edit) here -->
       </li>
-    <% }) %>
-  </ul>
-</body>
+      <% }) %>
+    </ul>
+    <% } %>
+  </body>
 </html>
