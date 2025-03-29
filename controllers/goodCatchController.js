@@ -5,27 +5,13 @@ const GoodCatch = require("../models/goodCatch");
 router.get("/", async (req, res) => {
   try {
     if (!req.session.user) {
-      console.error("No session user found");
       return res.status(401).send("Unauthorized: Please sign in.");
     }
-
     const sessionUserId = req.session.user._id;
-    const urlUserId = req.params.userId;
-
-    if (sessionUserId !== urlUserId) {
-      console.error("Session user ID and URL user ID do not match");
-      return res
-        .status(403)
-        .send("Forbidden: You do not have access to this user's data.");
-    }
-
-    console.log("Session user and URL user validated:", sessionUserId);
 
     const goodCatches = await GoodCatch.find({
       creationUser: sessionUserId,
     }).populate("creationUser");
-
-    console.log("GoodCatches found:", goodCatches.length);
     res.render("goodCatches/list.ejs", {
       goodCatches,
       user: req.session.user,
@@ -80,12 +66,15 @@ router.get("/:userId/goodCatch", async (req, res) => {
 
     // Ensure the user is accessing their own data
     if (sessionUserId !== urlUserId) {
-      return res.status(403).send("Forbidden: You can't access other users' data.");
+      return res
+        .status(403)
+        .send("Forbidden: You can't access other users' data.");
     }
 
     // Find GoodCatch records for the authenticated user
-    const goodCatches = await GoodCatch.find({ creationUser: sessionUserId })
-      .populate("creationUser");
+    const goodCatches = await GoodCatch.find({
+      creationUser: sessionUserId,
+    }).populate("creationUser");
 
     if (!goodCatches.length) {
       return res.status(404).send("No GoodCatches found for this user.");

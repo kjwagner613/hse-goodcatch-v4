@@ -53,16 +53,21 @@ app.use((req, res, next) => {
 
 // Routes
 app.use("/auth", authRoutes);
-app.use("/users", goodCatchController); // Use goodCatchController for /users routes
-app.use("/users/:userId/users", usersController);
+app.use("/goodCatch", goodCatchController);  // GoodCatch routes using session for user info
+app.use("/users", usersController);  // Users controller (e.g., for sign-up, etc.)
 
 // Home Route
 app.get("/", (req, res) => {
   if (req.session.user) {
-    res.redirect(`/users/${req.session.user._id}/goodCatch`);
+    res.redirect("/goodCatch");
   } else {
     res.render("index.ejs");
   }
+});
+
+// Test Route
+app.get("/test", (req, res) => {
+  res.render("test.ejs");
 });
 
 // Error Handling

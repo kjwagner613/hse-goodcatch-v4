@@ -47,7 +47,7 @@ exports.handleSignIn = async (req, res) => {
     };
 
     // Redirect to the home page or a protected route
-    res.redirect(`/users/${userInDatabase._id}/goodCatches`);
+    res.redirect(`/users/${userInDatabase._id}/goodCatch`);
   } catch (error) {
     console.error("Error during sign-in:", error);
     res.status(500).send("An error occurred during sign-in. Please try again.");
@@ -78,6 +78,8 @@ exports.handleSignUp = async (req, res) => {
     res.redirect("/auth/sign-up");
   }
 };
+
+// controllers/authController.js
 exports.handleSignIn = async (req, res) => {
   try {
     // Find user by username
@@ -87,24 +89,23 @@ exports.handleSignIn = async (req, res) => {
     }
 
     // Compare hashed password
-    const validPassword = bcrypt.compareSync(
-      req.body.password,
-      userInDatabase.password
-    );
+    const validPassword = bcrypt.compareSync(req.body.password, userInDatabase.password);
     if (!validPassword) {
       return res.status(401).send("Login failed. Invalid username or password.");
     }
 
-    // Set session
+    // Set session data
     req.session.user = {
       username: userInDatabase.username,
-      _id: userInDatabase._id,
+      _id: userInDatabase._id.toString(),  // Ensure it's a string
     };
 
-    // Successful login
-    res.redirect(`/users/${userInDatabase._id}/goodCatches`);
+    // Redirect to the generic goodCatch route
+    res.redirect(`/goodCatch`);
   } catch (error) {
     console.error("Error during sign-in:", error);
     res.status(500).send("An error occurred during sign-in. Please try again.");
   }
 };
+
+

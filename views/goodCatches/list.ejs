@@ -3,12 +3,12 @@
 <html>
 <head>
   <link rel="stylesheet" type="text/css" href="/stylesheets/style.css" />
-  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   <title>GoodCatch List</title>
 </head>
-<body>
+<body><div style="background: yellow; padding: 10px;">Navbar Test</div>
+
   <%- include("../partials/_navbar.ejs") %>
-  <h1>GoodCatch List for <%= user.username %></h1>  
+ <h1>GoodCatch List for <%= user.username %></h1>  
   <ul>
     <% goodCatches.forEach(goodCatch => { %>
       <li>
