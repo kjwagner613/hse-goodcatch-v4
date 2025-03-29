@@ -3,8 +3,9 @@
 <html>
 <head>
   <link rel="stylesheet" type="text/css" href="/stylesheets/style.css" />
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
   <title>GoodCatch List</title>
-</head>
+</head>  <%- include('../partials/_navbar.ejs') %>
 <body><div style="background: yellow; padding: 10px;">Navbar Test</div>
 
   <%- include("../partials/_navbar.ejs") %>
