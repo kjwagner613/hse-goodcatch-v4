@@ -100,8 +100,8 @@ exports.handleSignIn = async (req, res) => {
       _id: userInDatabase._id.toString(),  // Ensure it's a string
     };
 
-    // Redirect to the generic goodCatch route
-    res.redirect(`/goodCatch`);
+    // Redirect to the dashboard route
+    res.redirect(`/goodCatch/dashboard`);
   } catch (error) {
     console.error("Error during sign-in:", error);
     res.status(500).send("An error occurred during sign-in. Please try again.");

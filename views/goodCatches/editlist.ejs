@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <title>Edit Records</title>
+  </head>
+  <body>
+    <%- include("../partials/_navbar.ejs") %>
+    <h1>Edit Your GoodCatch Records</h1>
+    <% if (goodCatches.length === 0) { %>
+    <p>No records to edit.</p>
+    <% } else { %>
+    <ul>
+      <% goodCatches.forEach(item => { %>
+      <li>
+        <strong>Site:</strong> <%= item.site %> -
+        <strong>Department:</strong> <%= item.department %> -
+        <strong>Area:</strong> <%= item.area %> - <strong>Event:</strong> <%=
+        item.descriprtion %> -
+        <a href="/goodCatch/<%= item._id %>/edit">Edit</a>
+      </li>
+      ` <% }) %>
+    </ul>
+    <% } %>
+  </body>
+</html>

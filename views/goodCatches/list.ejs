@@ -1,34 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/stylesheets/style.css" />
-    <title>GoodCatch List</title>
-  </head>
-  <body>
-    <%- include("../partials/_navbar.ejs") %>
-    <h1>GoodCatch List for <%= user.username %></h1>
-
-    <% if (goodCatches.length === 0) { %>
-    <p>
-      No GoodCatches found. Create one by clicking "Create New" in the navbar.
-    </p>
-    <% } else { %>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/stylesheets/style.css" />
+  <title>GoodCatch List</title>
+</head>
+<body>
+  <%- include("../partials/_navbar.ejs") %>
+  <h1>GoodCatch List for <%= user.username %></h1>
+  <% if (goodCatches.length === 0) { %>
+    <p>No GoodCatch records found.</p>
+  <% } else { %>
     <ul>
-      <% goodCatches.forEach(goodCatch => { %>
-      <li>
-        <strong>Site:</strong> <%= goodCatch.site %><br />
-        <strong>Department:</strong> <%= goodCatch.department %><br />
-        <strong>Area:</strong> <%= goodCatch.area %><br />
-        <% if (goodCatch.events && goodCatch.events.length > 0) { %>
-        <strong>Event Category:</strong> <%= goodCatch.events[0].category %><br />
-        <strong>Event Description:</strong> <%= goodCatch.events[0].description
-        %> <% } %>
-        <!-- You can add more details or links (e.g., view or edit) here -->
-      </li>
+      <% goodCatches.forEach(catchItem => { %>
+        <li>
+          <strong>Site:</strong> <%= catchItem.site %><br>
+          <strong>Department:</strong> <%= catchItem.department %><br>
+          <strong>Area:</strong> <%= catchItem.area %><br>
+          <% if (catchItem.events && catchItem.events.length > 0) { %>
+            <strong>Event Category:</strong> <%= catchItem.events[0].category %><br>
+            <strong>Event Description:</strong> <%= catchItem.events[0].description %>
+          <% } %>
+          <br>
+          <a href="/goodCatch/<%= catchItem._id %>">View Details</a>
+        </li>
       <% }) %>
     </ul>
-    <% } %>
-  </body>
+  <% } %>
+</body>
 </html>

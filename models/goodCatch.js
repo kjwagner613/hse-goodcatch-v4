@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const eventSchema = new mongoose.Schema({
   category: { 
     type: String, 
-    enum: ["Slip and Fall", "Toxic Spill", "Unsafe Storage", "Equipment Malfunction"], // Add more categories as needed
+    enum: ["Slip and Fall", "Toxic Spill", "Unsafe Storage", "Equipment Failure"], // Add more categories as needed
     required: true
   },
   description: { 

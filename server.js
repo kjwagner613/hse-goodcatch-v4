@@ -11,11 +11,10 @@ const path = require("path");
 // Middleware Imports
 const authRoutes = require("./routes/authRoutes.js");
 const usersController = require("./controllers/userController.js");
-const isSignedIn = require("./middleware/is-signed-in.js");
-const passUserToView = require("./middleware/pass-user-to-view.js");
 const goodCatchController = require("./controllers/goodCatchController.js");
+const passUserToView = require("./middleware/pass-user-to-view.js");
 
-// Database Connection
+// Connect to MongoDB (using your .env connection string)
 mongoose.connect(process.env.MONGODB_URI);
 mongoose.connection.on("connected", () => {
   console.log(`Connected to MongoDB ${mongoose.connection.name}.`);
@@ -26,57 +25,58 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 // Middleware
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: false }));  // Parse URL-encoded bodies
 app.use(express.static(path.join(__dirname, "public")));
 app.use(methodOverride("_method"));
 
-// Session Configuration
+// Session Configuration (must come before CSRF)
 app.use(session({
-  secret: process.env.SESSION_SECRET || 'default-secret',
+  secret: process.env.SESSION_SECRET || "default-secret",
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: false } // Set to true in production
+  cookie: { secure: false } // use true in production with HTTPS
 }));
 
-// CSRF Protection
+// CSRF Protection Middleware (after session)
 const csrfProtection = csrf({ cookie: false });
 app.use(csrfProtection);
 
-// Pass user data to views
-app.use(passUserToView);
+// Make CSRF token available to all views
 app.use((req, res, next) => {
-  if (req.csrfToken) {
-    res.locals.csrfToken = req.csrfToken();
-  }
+  res.locals.csrfToken = req.csrfToken();
   next();
 });
 
-// Routes
+// Pass session user data to views
+app.use(passUserToView);
+
+// Mount Routes
 app.use("/auth", authRoutes);
-app.use("/goodCatch", goodCatchController);  // GoodCatch routes using session for user info
-app.use("/users", usersController);  // Users controller (e.g., for sign-up, etc.)
+app.use("/goodCatch", goodCatchController);
+app.use("/users", usersController);
 
 // Home Route
 app.get("/", (req, res) => {
   if (req.session.user) {
-    res.redirect("/goodCatch");
+    res.redirect("/goodCatch/dashboard");
   } else {
     res.render("index.ejs");
   }
 });
 
-// Test Route
-app.get("/test", (req, res) => {
-  res.render("test.ejs");
+// --- OPTIONAL: Test Route for form submission ---
+// (Usually, POST routes for GoodCatch are defined in goodCatchController)
+app.post('/goodCatch/new', (req, res) => {
+  console.log(req.body); // Log submitted form data
+  res.send('Form submitted successfully!');
 });
 
-// Error Handling
+// Error Handling Middleware
 app.use((err, req, res, next) => {
   console.error("Error:", err.stack);
   res.status(500).send("Something went wrong!");
 });
 
-// Start Server
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`The express app is ready on port ${port}!`);

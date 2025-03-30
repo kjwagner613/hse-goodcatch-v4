@@ -5,19 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/stylesheets/style.css" />
     <title>Create New GoodCatch</title>
-    <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
   </head>
-  <%- include('../partials/_navbar.ejs') %>
   <body>
-    <div style="background: yellow; padding: 10px">Navbar Test</div>
-
+    <%- include("../partials/_navbar.ejs") %>
     <div class="form-container">
       <h1>Create a New GoodCatch</h1>
       <form action="/goodCatch" method="POST">
         <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
         <div>
           <label for="site">Site</label>
-          <select id="site" name="site">
+          <select id="site" name="site" required>
             <option value="Baldwin Park">Baldwin Park</option>
             <option value="Carpinteria">Carpinteria</option>
             <option value="Boston">Boston</option>
@@ -25,33 +22,33 @@
             <option value="Minnetonka">Minnetonka</option>
           </select>
         </div>
-
         <div>
           <label for="department">Department</label>
-          <select id="department" name="department">
+          <select id="department" name="department" required>
             <option value="Warehouse">Warehouse</option>
             <option value="Shop Floor">Shop Floor</option>
             <option value="HR">HR</option>
-            <option value="Customer Service">Curstomer Service</option>
+            <option value="Customer Service">Customer Service</option>
             <option value="Front Office">Front Office</option>
           </select>
         </div>
-        >
-
-        <label for="area">Area:</label>
-        <input type="text" name="area" id="area" required />
-
-        <select id="category" name="category">
-          <option value="Slip and Fall">Slip and Fall</option>
-          <option value="Toxic Spill">Toxic Spill</option>
-          <option value="Chemicals w/o MSDS">Chemicals w/o MSDS</option>
-          <option value="Storage Fall Hazard">Storage Fall Hazard</option>
-          <option value="Machine Malfunction">Machine Malfunction</option>
-        </select>
-
-        <label for="description">Description:</label>
-        <textarea name="description" id="description" required></textarea>
-
+        <div>
+          <label for="category">Category</label>
+          <select id="category" name="category" required>
+            <option value="Slip and Fall">Slip and Fall</option>
+            <option value="Toxic Spill">Toxic Spill</option>
+            <option value="Unsafe Storage">Unsafe Storage</option>
+            <option value="Equipment Failure">Equipment Failure</option>
+          </select>
+        </div>
+        <div>
+          <label for="area">Area</label>
+          <input type="text" id="area" name="area" required />
+        </div>
+        <div>
+          <label for="description">Event Description</label>
+          <textarea id="description" name="description" required></textarea>
+        </div>
         <button type="submit">Create</button>
       </form>
     </div>
