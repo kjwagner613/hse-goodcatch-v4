@@ -170,6 +170,21 @@ router.put("/:id", async (req, res) => {
   }
 });
 
+const deleteTask = async (taskId) => {
+  try {
+    const res = await fetch(`${BASE_URL}/${taskId}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    });
+    return res.json();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
 // DELETE: Remove a GoodCatch
 router.delete("/:id", async (req, res) => {
   try {

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../stylesheets/style.css" />
+    <link rel="icon" href="/favicon.ico" />
+ 
+    <title>Edit GoodCatch</title>
+  </head>
+  <body>
+    <%- include("../partials/_navbar.ejs") %>
+
+    <div class="form-container">
+      <h1>Edit GoodCatch</h1>
+      <form action="/goodCatch/<%= goodCatch._id %>?_method=PUT" method="POST">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+        <div class="data-grid-items">
+          <div>
+            <label for="category">Category</label>
+            <select id="category" name="category" required>
+              <option value="Slip and Fall">Slip and Fall</option>
+              <option value="Toxic Spill">Toxic Spill</option>
+              <option value="Unsafe Storage">Unsafe Storage</option>
+              <option value="Equipment Failure">Equipment Failure</option>
+            </select>
+          </div>
+          <div>
+            <label for="description">Event Description</label>
+            <textarea id="description" name="description" required></textarea>
+          </div>
+  
+        />
+    
+        <button type="submit">Update</button>
+      </form>
+    </div>
+  </body>
+</html>

@@ -10,8 +10,7 @@
   <body>
     <%- include("../partials/_navbar.ejs") %>
     <h1>GoodCatch List for <%= user.username %></h1>
-    <div class="form-container"> 
-
+    <div class="form-container">
       <% if (goodCatches.length === 0) { %>
       <p>
         No GoodCatch records found. Start by
@@ -26,13 +25,19 @@
           <strong>Area:</strong> <%= catchItem.area %><br />
 
           <% if (catchItem.events && catchItem.events.length > 0) { %>
-          <strong>Event Category:</strong> <%= catchItem.events[0].category %><br />
-          <strong>Event Description:</strong> <%= catchItem.events[0].description %><br />
+          <strong>Event Category:</strong> <%= catchItem.events[0].category
+          %><br />
+          <strong>Event Description:</strong> <%=
+          catchItem.events[0].description %><br />
           <% } %>
 
           <div class="record">
-            <button class="edit-btn" data-id="<%= catchItem._id %>">Edit</button>
-            <button class="delete-btn" data-id="<%= catchItem._id %>">Delete</button>
+            <button class="edit-btn" data-id="<%= catchItem._id %>">
+              Edit
+            </button>
+            <button class="delete-btn" data-id="<%= catchItem._id %>">
+              Delete
+            </button>
           </div>
 
           <p>Record ID: <%= catchItem._id %></p>
@@ -48,21 +53,48 @@
     </div>
 
     <script>
-      document.addEventListener("click", (e) => {
+      const CSRF_TOKEN = "<%= csrfToken %>";
+    
+      document.addEventListener("click", async (e) => {
         if (e.target.classList.contains("edit-btn")) {
           const id = e.target.getAttribute("data-id");
           window.location.href = `/goodCatch/${id}/edit`;
         }
-
+    
         if (e.target.classList.contains("delete-btn")) {
           const id = e.target.getAttribute("data-id");
+    
           if (confirm("Are you sure you want to delete this item?")) {
-            fetch(`/goodCatch/${id}`, { method: "DELETE" })
-              .then(() => window.location.reload())
-              .catch((err) => alert("Failed to delete item."));
+            try {
+              const res = await fetch(`/goodCatch/${id}`, {
+                method: "DELETE",
+                headers: {
+                  "CSRF-Token": CSRF_TOKEN,
+                  "Content-Type": "application/json"
+                }
+              });
+    
+              const result = await res.text();
+              console.log("Server Response:", result);
+    
+              if (res.ok) {
+                window.location.reload();
+              } else {
+                alert("Delete failed: " + result);
+              }
+            } catch (err) {
+              console.error("Fetch DELETE error:", err);
+              alert("Network error during delete.");
+            }
           }
         }
       });
     </script>
+        </div> <!-- your last content container -->
+
+        <script> ... THE ABOVE SCRIPT ... </script>
+      </body>
+    </html>
+    
   </body>
 </html>
