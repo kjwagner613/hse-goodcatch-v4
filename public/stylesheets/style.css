@@ -2,90 +2,154 @@ body {
   margin-top: 2%;
   position: fixed;
 }
+.sign-up-form {
+  max-width: 400px; /* Limit the form width */
+  margin: 0 auto; /* Center the form horizontally */
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.form-grid-auth {
+  display: grid;
+  grid-template-columns: 1fr 2fr; /* Two columns: label (1fr) and input (2fr) */
+  gap: 10px 20px; /* Row gap of 10px, column gap of 20px */
+  margin-bottom: 20px; /* Space below the grid */
+}
+
+.form-grid-auth label {
+  text-align: right; /* Align labels to the right */
+  font-weight: bold;
+}
+
+.form-grid-auth input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.submit-btn {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.submit-btn:hover {
+  background-color: #0056b3;
+}
 
 .form-container {
   display: flex;
   flex-direction: column;
   position: relative;
-  top: 5%; /* Center vertically with some margin */
-  left: 2.5%; /* Center horizontally with some margin */
-  width: 95vw; /* 95% of the viewport width */
-  height: 95vh; /* 95% of the viewport height */
-  box-sizing: border-box; /* Include padding and border in width/height */
-  background-color: #fff; /* Optional: Add a background color */
-  border: 1px solid #ccc; /* Optional: Add a border */
-  padding: 20px; /* Optional: Add padding inside the container */
-  overflow: auto; /* Add scrollbars if content overflows */
+  top: 5vh;
+  left: 2.5%;
+  width: 95vw;
+  max-width: 800px;
+  height: 95vh;
+  box-sizing: border-box;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 20px;
+  overflow: auto;
+
 }
 
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  top: 5vh;
+  left: 2.5%;
+  width: 95vw;
+  max-width: 800px;
+  height: 95vh;
+  box-sizing: border-box;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 20px;
+  overflow: auto;
+}
+
+
 .data-grid {
-  display: grid; /* Enable grid layout */
+  display: grid;
   grid-template-columns: repeat(
     auto-fit,
     minmax(200px, 1fr)
-  ); /* Responsive columns */
-  gap: 20px; /* Space between grid items */
-  padding: 20px; /* Optional: Add padding inside the grid container */
-  background-color: #f9f9f9; /* Optional: Light background for contrast */
-  border: 1px solid #ccc; /* Optional: Add a border */
-  border-radius: 10px; /* Optional: Rounded corners */
+  );
+  gap: 20px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  overflow: auto;
+  padding-bottom: 20px;
 }
 
 .data-grid-item {
-  background-color: #fff; /* White background for each item */
-  border: 1px solid #ddd; /* Light border for each item */
-  padding: 15px; /* Add padding inside each item */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  border-radius: 5px; /* Rounded corners */
-  text-align: left; /* Center-align text */
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  text-align: left;
 }
 
-
 .data-grid-dashboard {
-    display: grid; /* Enable grid layout */
+  display: grid;
   grid-template-columns: repeat(
     auto-fit,
     minmax(200px, 1fr)
-  ); /* Responsive columns */
-  gap: 20px; /* Space between grid items */
-  padding: 20px; /* Optional: Add padding inside the grid container */
-  background-color: #f9f9f9; /* Optional: Light background for contrast */
-  border: 1px solid #ccc; /* Optional: Add a border */
-  border-radius: 10px; /* Optional: Rounded corners */
+  );
+  gap: 20px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 10px;
 }
 
 .data-grid-item-dashboard {
-  background-color: #fff; /* White background for each item */
-  border: 1px solid #ddd; /* Light border for each item */
-  padding: 15px; /* Add padding inside each item */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  border-radius: 5px; /* Rounded corners */
-  text-align: left; /* Center-align text */
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  text-align: left;
 }
 .navbar {
-  position: fixed; /* Keeps navbar in a fixed position */
-  top: 0; /* Positions it at the top */
-  left: 0; /* Positions it at the left */
-  width: 100%; /* Spans across the top */
-  background-color: #333; /* Dark background color */
-  color: #fff; /* White text */
-  padding: 10px; /* Adds spacing inside the navbar */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Adds a subtle shadow for depth */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
 
 .navbar ul {
-  list-style: none; /* Removes bullet points */
+  list-style: none;
   margin: 0;
   padding: 0;
-  display: flex; /* Aligns items horizontally */
-  gap: 20px; /* Adds space between navbar links */
+  display: flex;
+  gap: 20px;
 }
 
 .navbar ul li a {
-  color: #fff; /* White text for links */
-  text-decoration: none; /* Removes underline */
+  color: #fff;
+  text-decoration: none;
 }
 
 .navbar ul li a:hover {
-  text-decoration: underline; /* Adds underline on hover */
+  text-decoration: underline;
 }

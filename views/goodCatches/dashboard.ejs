@@ -11,21 +11,13 @@
   <body>
     <%- include("../partials/_navbar.ejs") %>
     <h1>Welcome, <%= user.username %></h1>
+    <h2>Your Records by Category</h2>
     <div class="form-container">
-      <!-- <div class="dashboard-buttons">
-    <a href="/goodCatch/new">Create New GoodCatch</a>
-    <a href="/goodCatch/dashboard">Dashboard</a>
-   
-    <a href="/goodCatch/editlist">Edit Records</a>
-    <a href="/goodCatch/deletelist">Delete Records</a>
-  </div> -->
-
-      <h2>Your Records by Category</h2>
-
+      
       <% if (goodCatches.length === 0) { %>
       <p>You have no GoodCatch records yet.</p>
       <% } else { %> <% for (let category in groupedByCategory) { %>
-      <h3>Category: <%= category %></h3>
+      <h3><%= category %></h3>
       <ul>
         <% groupedByCategory[category].forEach(item => { %>
         <li>
@@ -35,8 +27,8 @@
             <strong>Area:</strong> <%= item.area %><br />
             <!-- Optionally include event details -->
             <% if (item.events && item.events.length > 0) { %>
-            <strong>Event Description:</strong> <%= item.events[0].description %>
-            <% } %>
+            <strong>Event Description:</strong> <%= item.events[0].description
+            %> <% } %>
           </div>
         </li>
         <% }) %>
