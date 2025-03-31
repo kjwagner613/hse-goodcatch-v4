@@ -3,18 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <link rel="stylesheet" href="../stylesheets/style.css" />
+    <link rel="icon" href="/favicon.ico" />
  
     <title>Edit GoodCatch</title>
   </head>
   <body>
-    <div style="background: yellow; padding: 10px">Navbar Test</div>
+    <%- include("../partials/_navbar.ejs") %>
 
     <div class="form-container">
       <h1>Edit GoodCatch</h1>
       <form action="/goodCatch/<%= goodCatch._id %>?_method=PUT" method="POST">
         <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
-        <div>
+        <div class="data-grid-items">
           <label for="site">Site</label>
           <select id="site" name="site" required>
             <option value="Baldwin Park">Baldwin Park</option>

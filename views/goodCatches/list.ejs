@@ -1,32 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="/stylesheets/style.css" />
-  <title>GoodCatch List</title>
-</head>
-<body>
-  <%- include("../partials/_navbar.ejs") %>
-  <h1>GoodCatch List for <%= user.username %></h1>
-  <% if (goodCatches.length === 0) { %>
-    <p>No GoodCatch records found.</p>
-  <% } else { %>
-    <ul>
-      <% goodCatches.forEach(catchItem => { %>
-        <li>
-          <strong>Site:</strong> <%= catchItem.site %><br>
-          <strong>Department:</strong> <%= catchItem.department %><br>
-          <strong>Area:</strong> <%= catchItem.area %><br>
+  <head>
+    <link rel="stylesheet" href="../stylesheets/style.css" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GoodCatch List</title>
+  </head>
+  <body>
+    <%- include("../partials/_navbar.ejs") %>
+    <h1>GoodCatch List for <%= user.username %></h1>
+    <div class="form-container"> 
+
+      <% if (goodCatches.length === 0) { %>
+      <p>
+        No GoodCatch records found. Start by
+        <a href="/goodCatch/new">adding a new record</a>.
+      </p>
+      <% } else { %>
+      <div class="data-grid">
+        <% goodCatches.forEach(catchItem => { %>
+        <div class="data-grid-item">
+          <strong>Site:</strong> <%= catchItem.site %><br />
+          <strong>Department:</strong> <%= catchItem.department %><br />
+          <strong>Area:</strong> <%= catchItem.area %><br />
+
           <% if (catchItem.events && catchItem.events.length > 0) { %>
-            <strong>Event Category:</strong> <%= catchItem.events[0].category %><br>
-            <strong>Event Description:</strong> <%= catchItem.events[0].description %>
+          <strong>Event Category:</strong> <%= catchItem.events[0].category %><br />
+          <strong>Event Description:</strong> <%= catchItem.events[0].description %><br />
           <% } %>
-          <br>
-          <a href="/goodCatch/<%= catchItem._id %>">View Details</a>
-        </li>
-      <% }) %>
-    </ul>
-  <% } %>
-</body>
+
+          <div class="record">
+            <button class="edit-btn" data-id="<%= catchItem._id %>">Edit</button>
+            <button class="delete-btn" data-id="<%= catchItem._id %>">Delete</button>
+          </div>
+
+          <p>Record ID: <%= catchItem._id %></p>
+          <% catchItem.events.forEach(event => { %>
+          <p>Event ID: <%= event._id %></p>
+          <% }); %>
+
+          <!-- <a href="/goodCatch/<%= catchItem._id %>">View Details</a> -->
+        </div>
+        <% }); %>
+      </div>
+      <% } %>
+    </div>
+
+    <script>
+      document.addEventListener("click", (e) => {
+        if (e.target.classList.contains("edit-btn")) {
+          const id = e.target.getAttribute("data-id");
+          window.location.href = `/goodCatch/${id}/edit`;
+        }
+
+        if (e.target.classList.contains("delete-btn")) {
+          const id = e.target.getAttribute("data-id");
+          if (confirm("Are you sure you want to delete this item?")) {
+            fetch(`/goodCatch/${id}`, { method: "DELETE" })
+              .then(() => window.location.reload())
+              .catch((err) => alert("Failed to delete item."));
+          }
+        }
+      });
+    </script>
+  </body>
 </html>
