@@ -7,20 +7,17 @@
     <title>Home Page</title>
   </head>
   <body class="index-body">
+    <!-- Background box -->
+    <div class="colorBack"></div>
+
+    <h1 class="centered-text">HSE Event Tracker</h1>
+    <h2 class="subheader">Welcome</h2>
     <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
-    <div class="container">
-      <div class="auth-links">
-        <p>
-          <a class="signup-link" href="/auth/sign-up">Sign up</a>
-          <a class="signin-link" href="/auth/sign-in">Sign in</a>
-        </p>
-      </div>
-      <div class="index-container">
-        <div class="text-container">
-          <h1 class="centered-text">Welcome to Your</h1>
-          <h2 class="subheader">HSE Event Tracker</h2>
-        </div>
-      </div>
+    <p>
+      <div class="buttonContainer">
+      <a class="signup-link" href="/auth/sign-up">Sign up</a>
+      <a class="signin2-link" href="/auth/sign-in">Sign in</a>
     </div>
+    </p>
   </body>
 </html>

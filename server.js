@@ -25,17 +25,19 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 // Middleware
-app.use(express.urlencoded({ extended: false }));  // Parse URL-encoded bodies
+app.use(express.urlencoded({ extended: false })); // Parse URL-encoded bodies
 app.use(express.static(path.join(__dirname, "public")));
 app.use(methodOverride("_method"));
 
 // Session Configuration (must come before CSRF)
-app.use(session({
-  secret: process.env.SESSION_SECRET || "default-secret",
-  resave: false,
-  saveUninitialized: true,
-  cookie: { secure: false } // use true in production with HTTPS
-}));
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || "default-secret",
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false }, // use true in production with HTTPS
+  })
+);
 
 // CSRF Protection Middleware (after session)
 const csrfProtection = csrf({ cookie: false });
@@ -66,9 +68,9 @@ app.get("/", (req, res) => {
 
 // --- OPTIONAL: Test Route for form submission ---
 // (Usually, POST routes for GoodCatch are defined in goodCatchController)
-app.post('/goodCatch/new', (req, res) => {
+app.post("/goodCatch/new", (req, res) => {
   console.log(req.body); // Log submitted form data
-  res.send('Form submitted successfully!');
+  res.send("Form submitted successfully!");
 });
 
 // Error Handling Middleware

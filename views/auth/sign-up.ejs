@@ -9,27 +9,31 @@
   </head>
   <body>
     <h1>Sign Up</h1>
-    <form action="/auth/sign-up" method="POST" class="sign-up-form">
+    <form action="/auth/sign-up" method="POST" class="">
       <!-- Hidden input for CSRF token -->
       <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
 
       <div class="form-grid-auth">
-        <label for="username">Username:</label>
-        <input type="text" name="username" id="username" required />
+        <div class="grid-item-auth">
+          <div class="straightenout">
+          <label for="username">Username:</label>
+          <input type="text" name="username" id="username" required />
 
-        <label for="password">Password:</label>
-        <input type="password" name="password" id="password" required />
+          <label for="password">Password:</label>
+          <input type="password" name="password" id="password" required />
 
-        <label for="confirmPassword">Confirm Password:</label>
-        <input
-          type="password"
-          name="confirmPassword"
-          id="confirmPassword"
-          required
-        />
+          <label for="confirmPassword">Confirm Password:</label>
+          <input
+            type="password"
+            name="confirmPassword"
+            id="confirmPassword"
+            required
+          />
+       </div>
+        </div>
+
+        <button type="submit" class="submit-btn">Sign Up</button>
       </div>
-
-      <button type="submit" class="submit-btn">Sign Up</button>
     </form>
   </body>
 </html>

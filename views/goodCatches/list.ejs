@@ -6,77 +6,119 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>GoodCatch List</title>
+    <style>
+      /* Make the header fixed */
+      .dashboard-header-grid {
+        position: sticky;
+        top: 0;
+        background-color: white;
+        z-index: 10;
+        padding: 10px;
+        border-bottom: 1px solid #ccc;
+      }
+
+      /* Scrollable container for the form and data */
+      .form-container-dashboard {
+        max-height: 80vh; /* Adjust height as needed */
+        overflow-y: auto;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+
+      /* Optional: Style for the data grid */
+      .data-grid-dashboard {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 10px;
+      }
+
+      .data-grid-item-dashboard {
+        border: 1px solid #ddd;
+        padding: 10px;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+      }
+    </style>
   </head>
   <body>
     <%- include("../partials/_navbar.ejs") %>
-    <h1>GoodCatch List for <%= user.username %></h1>
-    <div class="form-container">
-      <% if (goodCatches.length === 0) { %>
-      <p>
-        No GoodCatch records found. Start by
-        <a href="/goodCatch/new">adding a new record</a>.
-      </p>
-      <% } else { %>
-      <div class="data-grid">
-        <% goodCatches.forEach(catchItem => { %>
-        <div class="data-grid-item">
-          <strong>Site:</strong> <%= catchItem.site %><br />
-          <strong>Department:</strong> <%= catchItem.department %><br />
-          <strong>Area:</strong> <%= catchItem.area %><br />
-
-          <% if (catchItem.events && catchItem.events.length > 0) { %>
-          <strong>Event Category:</strong> <%= catchItem.events[0].category
-          %><br />
-          <strong>Event Description:</strong> <%=
-          catchItem.events[0].description %><br />
-          <% } %>
-
-          <div class="record">
-            <button class="edit-btn" data-id="<%= catchItem._id %>">
-              Edit
-            </button>
-            <button class="delete-btn" data-id="<%= catchItem._id %>">
-              Delete
-            </button>
-          </div>
-
-          <p>Record ID: <%= catchItem._id %></p>
-          <% catchItem.events.forEach(event => { %>
-          <p>Event ID: <%= event._id %></p>
-          <% }); %>
-
-          <!-- <a href="/goodCatch/<%= catchItem._id %>">View Details</a> -->
-        </div>
-        <% }); %>
+    <div class="dashboard-page">
+      <div class="dashboard-header-grid">
+        <h1>GoodCatch List for <%= user.username %></h1>
+        <h2 class="h2-list">Manage your records below</h2>
       </div>
-      <% } %>
-    </div>
+      <div class="form-container-dashboard">
+        <% if (goodCatches.length === 0) { %>
+        <p>
+          No GoodCatch records found. Start by
+          <a href="/goodCatch/new">adding a new record</a>.
+        </p>
+        <% } else { %>
+        <div class="data-grid-dashboard">
+          <% goodCatches.forEach(catchItem => { %>
+          <div class="data-grid-item-dashboard">
+            <strong>Site:</strong> <%= catchItem.site %><br />
+            <strong>Department:</strong> <%= catchItem.department %><br />
+            <strong>Area:</strong> <%= catchItem.area %><br />
 
+            <% if (catchItem.events && catchItem.events.length > 0) { %>
+            <strong>Event Category:</strong> <%= catchItem.events[0].category
+            %><br />
+            <strong>Event Description:</strong> <%=
+            catchItem.events[0].description %><br />
+            <% } %>
+
+            <div class="record-actions">
+              <button class="edit-btn" data-id="<%= catchItem._id %>">
+                Edit
+              </button>
+              <form
+                action="/goodCatch/<%= catchItem._id %>?_method=DELETE"
+                method="POST"
+                style="display: inline"
+              >
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+                <button class="delete-btn" data-id="<%= catchItem._id %>">
+                  Delete
+                </button>
+              </form>
+            </div>
+            <p>Record ID: <%= catchItem._id %></p>
+            <% catchItem.events.forEach(event => { %>
+            <p>Event ID: <%= event._id %></p>
+            <% }); %>
+          </div>
+          <% }); %>
+        </div>
+        <% } %>
+      </div>
+    </div>
     <script>
       const CSRF_TOKEN = "<%= csrfToken %>";
-    
+
       document.addEventListener("click", async (e) => {
         if (e.target.classList.contains("edit-btn")) {
           const id = e.target.getAttribute("data-id");
           window.location.href = `/goodCatch/${id}/edit`;
         }
-    
+
         if (e.target.classList.contains("delete-btn")) {
           const id = e.target.getAttribute("data-id");
-    
+
           if (confirm("Are you sure you want to delete this item?")) {
             try {
               const res = await fetch(`/goodCatch/${id}`, {
                 method: "DELETE",
                 headers: {
                   "CSRF-Token": CSRF_TOKEN,
-                  "Content-Type": "application/json"
-                }
+                  "Content-Type": "application/json",
+                },
               });
-    
+
               const result = await res.text();
               console.log("Server Response:", result);
-    
+
               if (res.ok) {
                 window.location.reload();
               } else {
@@ -90,11 +132,5 @@
         }
       });
     </script>
-        </div> <!-- your last content container -->
-
-        <script> ... THE ABOVE SCRIPT ... </script>
-      </body>
-    </html>
-    
   </body>
 </html>
