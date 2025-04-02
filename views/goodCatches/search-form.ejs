@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <meta charset="UTF-8" />
+    <title>Search GoodCatch</title>
+  </head>
+  <body>
+    <%- include("../partials/_navbar.ejs") %>
+    <div class="form-container">
+      <h1>Create a New GoodCatch</h1>
+      <form action="/goodCatch/search" method="GET">
+        <div class="data-grid">
+          <div class="data-grid-item">
+            <label for="site">Site</label>
+            <select id="site" name="site">
+              <option value="">Select a site OR leave blank</option>
+              <option value="Baldwin Park">Baldwin Park</option>
+              <option value="Carpinteria">Carpinteria</option>
+              <option value="Boston">Boston</option>
+              <option value="Shenzhen">Shenzhen</option>
+              <option value="Minnetonka">Minnetonka</option>
+            </select>
+          </div>
+          <div class="data-grid-item">
+            <label for="department">Department</label>
+            <select id="department" name="department">
+              <option value="">Select a department OR leave blank</option>
+              <option value="Warehouse">Warehouse</option>
+              <option value="Shop Floor">Shop Floor</option>
+              <option value="HR">HR</option>
+              <option value="Customer Service">Customer Service</option>
+              <option value="Front Office">Front Office</option>
+            </select>
+          </div>
+          <div class="data-grid-item">
+            <label for="category">Category</label>
+            <select id="category" name="category">
+              <option value="">Select a category OR leave blank</option>
+              <option value="Slip and Fall">Slip and Fall</option>
+              <option value="Toxic Spill">Toxic Spill</option>
+              <option value="Unsafe Storage">Unsafe Storage</option>
+              <option value="Equipment Failure">Equipment Failure</option>
+            </select>
+          </div>
+          <button type="submit">Search</button>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

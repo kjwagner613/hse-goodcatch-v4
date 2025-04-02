@@ -24,12 +24,16 @@ router.get("/dashboard", async (req, res) => {
       return res.status(401).send("Unauthorized: Please sign in.");
     }
     const userId = req.session.user._id;
-    const goodCatches = await GoodCatch.find({ creationUser: userId }).populate("creationUser");
+    const goodCatches = await GoodCatch.find({ creationUser: userId }).populate(
+      "creationUser"
+    );
 
     // Group records by category (using first event's category)
     const groupedByCategory = {};
-    goodCatches.forEach(item => {
-      const category = (item.events && item.events[0] && item.events[0].category) || "Uncategorized";
+    goodCatches.forEach((item) => {
+      const category =
+        (item.events && item.events[0] && item.events[0].category) ||
+        "Uncategorized";
       if (!groupedByCategory[category]) {
         groupedByCategory[category] = [];
       }
@@ -45,6 +49,69 @@ router.get("/dashboard", async (req, res) => {
   } catch (error) {
     console.error("Error fetching dashboard:", error);
     res.status(500).send("Failed to load dashboard");
+  }
+});
+
+router.get("/search", async (req, res) => {
+  try {
+    const { site, department, category, area } = req.query;
+    const userId = req.session.user._id;
+
+    // Construct a query object dynamically
+    let searchCriteria = { creationUser: userId };
+    if (site) searchCriteria.site = new RegExp(site, "i");
+    if (department) searchCriteria.department = new RegExp(department, "i");
+    if (category) searchCriteria["events.category"] = new RegExp(category, "i");
+    if (area) searchCriteria.area = new RegExp(area, "i");
+
+    const goodCatches = await GoodCatch.find(searchCriteria).populate("creationUser");
+
+    res.render("goodCatches/list", {
+      goodCatches,
+      user: req.session.user,
+      searchTerm: req.query,
+    });
+  } catch (error) {
+    console.error("Search error:", error);
+    res.status(500).send("Search failed");
+  }
+});
+
+router.get("/search-form", (req, res) => {
+  if (!req.session.user) {
+    return res.redirect("/auth/sign-in");
+  }
+  res.render("goodCatches/search-form", {
+    user: req.session.user,
+    csrfToken: res.locals.csrfToken,
+  });
+});
+
+router.get("/search", async (req, res) => {
+  try {
+    const query = req.query.q;
+    const regex = new RegExp(query, "i");
+
+    const userId = req.session.user._id;
+
+    const goodCatches = await GoodCatch.find({
+      creationUser: userId,
+      $or: [
+        { site: regex },
+        { department: regex },
+        { area: regex },
+        { "events.description": regex },
+      ],
+    }).populate("creationUser");
+
+    res.render("goodCatches/list", {
+      goodCatches,
+      user: req.session.user,
+      searchTerm: query,
+    });
+  } catch (error) {
+    console.error("Search error:", error);
+    res.status(500).send("Search failed");
   }
 });
 
@@ -93,7 +160,9 @@ router.get("/", async (req, res) => {
       return res.status(401).send("Unauthorized: Please sign in.");
     }
     const userId = req.session.user._id;
-    const goodCatches = await GoodCatch.find({ creationUser: userId }).populate("creationUser");
+    const goodCatches = await GoodCatch.find({ creationUser: userId }).populate(
+      "creationUser"
+    );
     res.render("goodCatches/list.ejs", {
       goodCatches,
       user: req.session.user,
@@ -173,9 +242,9 @@ router.put("/:id", async (req, res) => {
 const deleteTask = async (taskId) => {
   try {
     const res = await fetch(`${BASE_URL}/${taskId}`, {
-      method: 'DELETE',
+      method: "DELETE",
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
     return res.json();
@@ -183,7 +252,6 @@ const deleteTask = async (taskId) => {
     console.log(error);
   }
 };
-
 
 // DELETE: Remove a GoodCatch
 router.delete("/:id", async (req, res) => {
