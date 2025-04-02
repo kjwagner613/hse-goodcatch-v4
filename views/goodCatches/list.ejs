@@ -42,13 +42,15 @@
     </style>
   </head>
   <body>
-    <%- include("../partials/_navbar.ejs") %> <% if (searchTerm) { %>
-    <p>Search results for: "<%= searchTerm %>"</p>
-    <% } %>
+    <%- include("../partials/_navbar.ejs") %>
     <% if (searchTerm) { %>
-      <p>Showing results for: "<%= searchTerm %>"</p>
+    <p>
+      Search results for: <% for (let [key, value] of
+      Object.entries(searchTerm)) { if (value) { %>
+      <strong><%= key %>:</strong> <%= value %>&nbsp; <% } } %>
+    </p>
     <% } %>
-    
+
     <div class="dashboard-page">
       <div class="dashboard-header-grid">
         <h1>GoodCatch List for <%= user.username %></h1>
@@ -135,8 +137,6 @@
               alert("Network error during delete.");
             }
           }
-
-   
         }
       });
     </script>

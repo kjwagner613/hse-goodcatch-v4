@@ -64,9 +64,7 @@ router.get("/search", async (req, res) => {
     if (category) searchCriteria["events.category"] = new RegExp(category, "i");
     if (area) searchCriteria.area = new RegExp(area, "i");
 
-    const goodCatches = await GoodCatch.find(searchCriteria).populate(
-      "creationUser"
-    );
+    const goodCatches = await GoodCatch.find(searchCriteria).populate("creationUser");
 
     res.render("goodCatches/list", {
       goodCatches,
@@ -87,6 +85,34 @@ router.get("/search-form", (req, res) => {
     user: req.session.user,
     csrfToken: res.locals.csrfToken,
   });
+});
+
+router.get("/search", async (req, res) => {
+  try {
+    const query = req.query.q;
+    const regex = new RegExp(query, "i");
+
+    const userId = req.session.user._id;
+
+    const goodCatches = await GoodCatch.find({
+      creationUser: userId,
+      $or: [
+        { site: regex },
+        { department: regex },
+        { area: regex },
+        { "events.description": regex },
+      ],
+    }).populate("creationUser");
+
+    res.render("goodCatches/list", {
+      goodCatches,
+      user: req.session.user,
+      searchTerm: req.query,
+    });
+  } catch (error) {
+    console.error("Search error:", error);
+    res.status(500).send("Search failed");
+  }
 });
 
 // GET: Render list view for editing records (edit list)
@@ -141,7 +167,6 @@ router.get("/", async (req, res) => {
       goodCatches,
       user: req.session.user,
       currentPage: "list",
-      searchTerm: {},
     });
   } catch (error) {
     console.error("Error fetching GoodCatches:", error);
