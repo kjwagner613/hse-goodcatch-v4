@@ -4,40 +4,65 @@
     <link rel="stylesheet" href="/stylesheets/style.css" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-       <link rel="icon" href="/favicon.ico" />
+    <link rel="icon" href="/favicon.ico" />
     <title>Edit GoodCatch</title>
   </head>
   <body>
     <%- include("../partials/_navbar.ejs") %>
-    <h1 class="h1-edit4"></h1> >Edit GoodCatch Record</h1>
+    <h1 class="h1-edit4">Edit GoodCatch Record</h1>
     <div class="data-grid-edit4">
       <form action="/goodCatch/<%= goodCatch._id %>?_method=PUT" method="POST">
         <!-- Hidden input for CSRF token -->
         <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
 
         <div class="grid-item4">
-          <label for="site">Site:</label>
-          <input type="text" name="site" id="site" value="<%= goodCatch.site %>" required />
+          <label for="site">Site</label>
+          <select id="site" name="site" required>
+            <option value="Baldwin Park">Baldwin Park</option>
+            <option value="Carpinteria">Carpinteria</option>
+            <option value="Boston">Boston</option>
+            <option value="Shenzhen">Shenzhen</option>
+            <option value="Minnetonka">Minnetonka</option>
+          </select>
         </div>
 
         <div class="grid-item4">
-          <label for="department">Department:</label>
-          <input type="text" name="department" id="department" value="<%= goodCatch.department %>" required />
+          <label for="department">Department</label>
+          <select id="department" name="department" required>
+            <option value="Warehouse">Warehouse</option>
+            <option value="Shop Floor">Shop Floor</option>
+            <option value="HR">HR</option>
+            <option value="Customer Service">Customer Service</option>
+            <option value="Front Office">Front Office</option>
+          </select>
+        </div>
+
+        <div class="grid-item4">
+          <label for="category">Category</label>
+          <select id="category" name="category" required>
+            <option value="Slip and Fall">Slip and Fall</option>
+            <option value="Toxic Spill">Toxic Spill</option>
+            <option value="Unsafe Storage">Unsafe Storage</option>
+            <option value="Equipment Failure">Equipment Failure</option>
+          </select>
         </div>
 
         <div class="grid-item4">
           <label for="area">Area:</label>
-          <input type="text" name="area" id="area" value="<%= goodCatch.area %>" required />
-        </div>
-
-        <div class="grid-item4">
-          <label for="category">Event Category:</label>
-          <input type="text" name="category" id="category" value="<%= goodCatch.events[0]?.category || '' %>" required />
+          <input
+            type="text"
+            name="area"
+            id="area"
+            value="<%= goodCatch.area %>"
+            required
+          />
         </div>
 
         <div class="grid-item4">
           <label for="description">Event Description:</label>
-          <textarea name="description" id="description" rows="4" required><%= goodCatch.events[0]?.description || '' %></textarea>
+          <textarea name="description" id="description" rows="4" required>
+<%= goodCatch.events[0]?.description || '' %></textarea
+          >
         </div>
 
         <div class="grid-item4">

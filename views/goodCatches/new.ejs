@@ -8,7 +8,7 @@
   </head>
   <body>
     <%- include("../partials/_navbar.ejs") %>
-    <div class="form-container">
+    <div class="form-container-new">
       <h1>Create a New GoodCatch</h1>
       <form action="/goodCatch" method="POST">
         <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
@@ -50,11 +50,8 @@
             <label for="description">Event Description</label>
             <textarea id="description" name="description" required></textarea>
           </div>
-          <div class="data-grid-item">
-            <label for="additionalInfo">Additional Information</label>
-            <textarea id="additionalInfo" name="additionalInfo"></textarea>
-          </div>
-          <button type="submit">Create</button>
+
+          <button class="defButton" , type="submit">Create</button>
         </div>
       </form>
     </div>

@@ -108,25 +108,6 @@ router.get("/editlist", async (req, res) => {
   }
 });
 
-// GET: Render list view for deleting records (delete list)
-router.get("/deletelist", async (req, res) => {
-  try {
-    if (!req.session.user) {
-      return res.status(401).send("Unauthorized: Please sign in.");
-    }
-    const userId = req.session.user._id;
-    const goodCatches = await GoodCatch.find({ creationUser: userId });
-    res.render("goodCatches/deletelist.ejs", {
-      goodCatches,
-      user: req.session.user,
-      csrfToken: res.locals.csrfToken,
-    });
-  } catch (error) {
-    console.error("Error fetching records for deletion:", error);
-    res.status(500).send("Failed to load records for deletion.");
-  }
-});
-
 // GET: List GoodCatch records (simple list view)
 router.get("/", async (req, res) => {
   try {
@@ -194,19 +175,25 @@ router.get("/:id/edit", async (req, res) => {
 // PUT: Update a GoodCatch
 router.put("/:id", async (req, res) => {
   try {
-    const updatedGoodCatch = await GoodCatch.findByIdAndUpdate(
-      req.params.id,
-      {
-        site: req.body.site,
-        department: req.body.department,
-        area: req.body.area,
-        events: req.body.events || [],
-      },
-      { new: true }
-    );
-    if (!updatedGoodCatch) {
+    const goodCatch = await GoodCatch.findById(req.params.id);
+    if (!goodCatch) {
       return res.status(404).send("GoodCatch not found");
     }
+
+    // Update top-level fields
+    goodCatch.site = req.body.site;
+    goodCatch.department = req.body.department;
+    goodCatch.area = req.body.area;
+
+    // Update the first event's category and description (if present)
+    if (goodCatch.events.length > 0) {
+      goodCatch.events[0].category =
+        req.body.category || goodCatch.events[0].category;
+      goodCatch.events[0].description =
+        req.body.description || goodCatch.events[0].description;
+    }
+
+    await goodCatch.save();
     res.redirect("/goodCatch/dashboard");
   } catch (error) {
     console.error("Error updating GoodCatch:", error);
@@ -214,31 +201,17 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-const deleteTask = async (taskId) => {
-  try {
-    const res = await fetch(`${BASE_URL}/${taskId}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
-    return res.json();
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 // DELETE: Remove a GoodCatch
 router.delete("/:id", async (req, res) => {
   try {
     const deletedGoodCatch = await GoodCatch.findByIdAndDelete(req.params.id);
     if (!deletedGoodCatch) {
-      return res.status(404).send("GoodCatch not found");
+      return res.status(404).json({ message: "GoodCatch not found" });
     }
-    res.redirect("/goodCatch/dashboard");
+    res.status(200).json({ message: "Deleted successfully" }); // ✅ JSON format
   } catch (error) {
     console.error("Error deleting GoodCatch:", error);
-    res.status(500).send("Failed to delete GoodCatch");
+    res.status(500).json({ message: "Failed to delete GoodCatch" }); // ✅ JSON format
   }
 });
 

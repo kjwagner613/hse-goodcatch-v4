@@ -7,37 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>Dashboard</title>
-    <style>
-      .dashboard-page {
-        display: flex;
-        flex-direction: column;
-        height: 100vh; /* Full viewport height */
-        overflow: hidden; /* Prevent page scroll */
-      }
-
-      .dashboard-header-grid {
-        position: sticky;
-        top: 0;
-        background-color: white; /* Ensure it doesn't overlap */
-        z-index: 10;
-        padding: 10px;
-        border-bottom: 1px solid #ccc;
-      }
-
-      .form-container-dashboard {
-        flex: 1;
-        overflow-y: auto; /* Enable scrolling within this container */
-        padding: 10px;
-      }
-
-      .data-grid-item-dashboard {
-        margin-bottom: 10px;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        background-color: #f9f9f9;
-      }
-    </style>
   </head>
   <body>
     <%- include("../partials/_navbar.ejs") %>
@@ -46,7 +15,6 @@
         <h1 class="h1-dashboard">Welcome, <%= user.username %></h1>
         <h2 class="h2-dashboard">GoodCatch by Category</h2>
       </div>
-      
 
       <div class="form-container-dashboard">
         <% if (goodCatches.length === 0) { %>

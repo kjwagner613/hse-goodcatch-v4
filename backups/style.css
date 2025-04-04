@@ -1,48 +1,35 @@
+html {
+  height: auto;
+  min-height: 100%;
+  background-color: #ffffff;
+}
+
 body {
-  background-color: #230e0e;
+  height: auto;
+  min-height: 100%;
 }
 
 .index-grid {
-  max-height: 95vh;
-  max-width: 95vw;
+  height: 100vh;
+  width: 100vw;
   display: grid;
-  grid-template-columns: 19.5vw 19.5vw 19.5vw 19.5vw 19.5vw;
-  grid-template-rows: 24vh 24vh 24vh 24vh;
-  gap: 3px;
-  border: 1px solid #ffffff;
+  grid-template-columns: 20vw 20vw 20vw 20vw 20vw;
+  grid-template-rows: 25vh 25vh 25vh 25vh;
+  gap: 10px;
+  border: 1px solid red;
   background-color: #ffffff;
   border-radius: 10px;
-  box-sizing: border-box;
 }
 
 .index-grid-item {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 2px solid #ffffff;
+  border: 2px solid red;
   box-sizing: border-box;
-  background-color: #214223;
-  color: white;
-  padding: 10px;
-  font-size: 16px;
-  border: 2px solid #230e0e;
-  font-weight: bold;
-  transition: all 0.3s ease;
-  border-radius: 5px;
+  background-color: #808080;
+  padding: 5px;
 }
 
-.index-grid-item:hover {
-  background-color: #230e0e;
-  color: white;
-  transform: scale(1.05);
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
-}
-.index-grid-item:active {
-  transform: scale(1.1);
-}
-.index-grid-item:focus {
-  outline: none;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+.index-grid-item:first-child {
+  background-color: yellow;
 }
 
 .h1-edit4 {
@@ -53,12 +40,12 @@ body {
 }
 
 .dashboard-page {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  overflow: hidden;
+  position: relative;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
-
 .signingButtons-Grid {
   display: grid;
 }
@@ -95,24 +82,22 @@ body {
 .h1-index {
   color: white;
   position: absolute;
-  top: 25vh;
-  left: 45vw;
-  font-size: 3rem;
+  top: 35vh;
+  left: 50vw;
 }
 
-.h1-index {
-  font-family: Arial, sans-serif;
+.h2-index {
+  color: red;
+  position: absolute;
+  top: 2vh;
+  left: 35vw;
+  font-size: 5rem;
+  /* background-color: #230e0e; */
   font-weight: bold;
-  text-align: center;
-  color: #333;
-  padding: 20px;
-  background: linear-gradient(
-    to right,
-    rgba(169, 169, 169, 0.5),
-    rgba(169, 169, 169, 0)
-  );
-  display: inline-block;
-  border-radius: 5px;
+  text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
+  text-decoration: underline;
+  text-decoration-color: #230e0e; /* Custom underline color */
+  text-decoration-thickness: 3px; /* Thicker underline */
 }
 
 .centered-text {
@@ -120,6 +105,7 @@ body {
   position: absolute;
   top: 80%;
   left: 10%;
+
   font-size: 3rem;
   margin: 0 auto;
 }
@@ -152,26 +138,14 @@ body {
   z-index: 200;
   display: grid;
   grid-template-rows: auto auto;
-  background-color: #230e0e;
+  background-color: #e15959;
   gap: 10px;
   justify-content: center;
   align-items: center;
   text-align: center;
   border: 5px solid white;
   height: 100px;
-  color: white;
 }
-
-.h1-sign {
-  color:  white;
-  display: flex;
-  justify-content: center;
-  margin-top: 15vh;
-  margin-bottom: 15vh;
-  font-size: 3rem;
-  
-}
-
 
 .h1-dashboard {
   position: relative;
@@ -208,17 +182,11 @@ body {
   transform: translateX(-50%);
 }
 
-.form-container-new {
-  position: absolute;
-  top: 10vh;
-  left: 50%;
-  transform: translateX(-50%);
-}
 .h1-search {
   position: relative;
-  left: 16%;
-  color: white;
+  left: 12%;
 
+  color: white;
 }
 
 .h1-edit {
@@ -285,6 +253,9 @@ body {
   text-align: center;
   max-width: 200px;
 }
+dver {
+  background-color: #0056b3;
+}
 
 .form-grid-auth {
   display: flex;
@@ -346,11 +317,6 @@ body {
   overflow: auto;
   background: grey;
 }
-.data-grid-dashboard {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 10px;
-}
 
 .data-grid {
   display: grid;
@@ -366,14 +332,14 @@ body {
 
 .data-grid-search {
   display: grid;
-  grid-template-columns: 25vw 25vw ;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 20px;
   padding: 20px;
   background-color: #230e0e;
   border: 1px solid #3b82f6;
   border-radius: 10px;
   background: rgba(0, 0, 0, 0.345);
-  width: 50vw;
+  max-width: 600px;
 }
 
 .data-grid-edit4 {
@@ -430,7 +396,7 @@ body {
   border-radius: 5px;
   text-align: left;
   background: rgb(212, 207, 207);
-  width: 20vw;
+  width: 150px;
 }
 
 .grid-item input,
@@ -704,3 +670,34 @@ index-defButton2 {
   gap: 20px;
 }
 
+.signup-link,
+.signin2-link {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 10px 20px;
+  border: 1px solid #007bff;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  text-align: center;
+  cursor: pointer;
+}
+
+.signin2-link {
+  position: absolute;
+  top: 85%;
+  left: 55%;
+}
+
+.signup-link {
+  position: absolute;
+  top: 45%;
+  left: 3.5%;
+}
+
+.signup-link:hover,
+.signin2-link:hover {
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+}
