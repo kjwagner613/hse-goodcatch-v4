@@ -163,15 +163,13 @@ body {
 }
 
 .h1-sign {
-  color:  white;
+  color: white;
   display: flex;
   justify-content: center;
   margin-top: 15vh;
   margin-bottom: 15vh;
   font-size: 3rem;
-  
 }
-
 
 .h1-dashboard {
   position: relative;
@@ -218,13 +216,17 @@ body {
   position: relative;
   left: 16%;
   color: white;
-
 }
 
 .h1-edit {
   text-indent: 3vw;
 }
 
+.h1-create {
+  color: white;
+  position: relative;
+  left: 10vw;
+}
 .form-grid-auth {
   margin: 0 auto;
 }
@@ -366,7 +368,7 @@ body {
 
 .data-grid-search {
   display: grid;
-  grid-template-columns: 25vw 25vw ;
+  grid-template-columns: 25vw 25vw;
   gap: 20px;
   padding: 20px;
   background-color: #230e0e;
@@ -703,4 +705,3 @@ index-defButton2 {
   align-items: center;
   gap: 20px;
 }
-

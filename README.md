@@ -33,8 +33,9 @@
 
 ## Screenshots
 
-![GoodCatch Dashboard](public/assets/screenshots/dashboard.png)
-![Create Form](public/assets/screenshots/create-form.png)
-![Search Results](public/assets/screenshots/search-results.png)
+![GoodCatch SingIn/SignUp](public/assets/signIn-Up.png)
+![GoodCatch Dashboard](public/assets/dashboard.png)
+![Create Form](public/assets/create-form.png)
+
 
 > (Drop your actual screenshots into the `/public/assets/screenshots` folder and update paths here)

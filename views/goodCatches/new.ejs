@@ -9,7 +9,7 @@
   <body>
     <%- include("../partials/_navbar.ejs") %>
     <div class="form-container-new">
-      <h1>Create a New GoodCatch</h1>
+      <h1 class="h1-create">Create a New GoodCatch</h1>
       <form action="/goodCatch" method="POST">
         <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
         <div class="data-grid">
