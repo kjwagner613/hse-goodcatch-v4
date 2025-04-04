@@ -85,14 +85,22 @@ exports.handleSignIn = async (req, res) => {
     // Find user by username
     const userInDatabase = await User.findOne({ username: req.body.username });
     if (!userInDatabase) {
-      return res.status(401).send("Login failed. Invalid username or password.");
-    }
+      return res.status(401).send(`
+    <p>Login failed. Invalid username or password.</p>
+    <a href="/auth/sign-in">Please Try Again</a>
+  `);
+}
+
 
     // Compare hashed password
     const validPassword = bcrypt.compareSync(req.body.password, userInDatabase.password);
     if (!validPassword) {
-      return res.status(401).send("Login failed. Invalid username or password.");
-    }
+      return res.status(401).send(`
+    <p>Login failed. Invalid username or password.</p>
+    <a href="/auth/sign-in">Please Try Again</a>
+  `);
+}
+
 
     // Set session data
     req.session.user = {
