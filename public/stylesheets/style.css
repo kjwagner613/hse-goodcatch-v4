@@ -184,6 +184,7 @@ body {
   position: relative;
   top: 8%;
   z-index: 50;
+  margin-bottom: 2vh;
 }
 
 .h2-list {
@@ -239,7 +240,7 @@ body {
 .form-grid-auth {
   margin: 0 auto;
 }
-.delete-btn {
+/* .delete-btn {
   background-color: crimson;
   color: white;
   border: none;
@@ -248,27 +249,80 @@ body {
   font-size: 1rem;
   cursor: pointer;
   text-align: center;
+} */
+
+.delete-btn {
+  background: linear-gradient(135deg, #e01212, #ab4b4b); /* Blue & Tan Gradient */
+  color: white;
+  padding: 12px 24px;
+  font-size: 12px;
+  border: 3px solid #fff;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  height: 4vh;
+  width: 8vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  margin: 0;
+  white-space: nowrap;
+  }
+
+.delete-btn:hover {
+  background: linear-gradient(135deg, #db9c9c, #f7f4f4);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+  transform: scale(1.05);
 }
+
+
+.delete-btn:active {
+  transform: scale(0.98);
+}
+
 
 .edit-btn {
-  background-color: #3030daa7;
+  background: linear-gradient(135deg, #1249e0, #6886da); /* Blue & Tan Gradient */
   color: white;
-  border: none;
-  border-radius: 5px;
-  padding: 10px;
-  font-size: 1rem;
+  padding: 12px 24px;
+  font-size: 12px;
+  border: 3px solid #fff;
+  border-radius: 8px;
   cursor: pointer;
-  text-align: center;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  height: 4vh;
+  width: 8vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  margin: 0;
+  white-space: nowrap;
 }
 
-.record {
-  display: flex;
-  gap: 10px;
-  justify-content: flex-start;
-  align-items: center;
-  margin-top: 10px;
-  margin-bottom: 10px;
+.edit-btn:hover {
+  background: linear-gradient(135deg, #e2e3e7, #4961a2);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+  transform: scale(1.05);
 }
+
+
+.edit-btn:active {
+  transform: scale(0.98);
+}
+
+.record-actions {
+  display: flex;
+  gap: 1px; /* Adds spacing between buttons */
+  justify-content: flex-start; /* Aligns items to the left */
+  align-items: center;
+  text-align: left;
+}
+
+
 
 .form-grid-auth label {
   text-align: right;
@@ -555,7 +609,7 @@ body {
   left: 40vw;
 }
 
-.defButton {
+/* .defButton {
   position: relative;
   padding: 10px;
   background-color: rgb(73, 73, 238);
@@ -568,6 +622,36 @@ body {
   height: 50px;
   width: 75px;
   margin: 0 auto;
+} */
+
+.defButton {
+  background: linear-gradient(135deg, #224b66, #3a5261); /* Blue & Tan Gradient */
+  color: white;
+  padding: 12px 24px;
+  font-size: 16px;
+  border: 3px solid #fff;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  height: 6vh;
+  width: 12vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  margin: 0 auto;
+  white-space: nowrap;
+}
+
+.defButton:hover {
+  background: linear-gradient(135deg, #499dd6, #82b7da);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+  transform: scale(1.05);
+}
+
+.defButton:active {
+  transform: scale(0.98);
 }
 
 index-grid-item-wide1 {
