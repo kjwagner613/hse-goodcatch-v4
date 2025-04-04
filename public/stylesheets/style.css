@@ -167,7 +167,16 @@ body {
   display: flex;
   justify-content: center;
   margin-top: 15vh;
-  margin-bottom: 15vh;
+  margin-bottom: 5vh;
+  font-size: 3rem;
+}
+
+.h2-sign {
+  color: white;
+  display: flex;
+  justify-content: center;
+  margin-top: 5vh;
+  margin-bottom: 10vh;
   font-size: 3rem;
 }
 

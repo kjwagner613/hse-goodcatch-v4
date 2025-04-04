@@ -8,18 +8,9 @@
     <title>Sign In</title>
   </head>
   <body>
-    <h1 class="h1-sign">Sign In</h1>
+    <h1 class="h1-sign">Welcome</h1>
     <form action="/auth/sign-in" method="POST" class="">
-      <h1
-        style="
-          font-size: 25px;
-          color: black;
-          text-align: center;
-          margin-top: 45px;
-        "
-      >
-        Welcome
-      </h1>
+      <h2 class="h2-sign">Sign In</h2>
       <!-- Hidden input for CSRF token -->
       <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
 
